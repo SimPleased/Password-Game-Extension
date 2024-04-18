@@ -5,12 +5,12 @@ This doesn't read ANY data from the site.
 
 # Current Tools
 
-1) `Video Search`: finds a video of certain length.
+`Video Search`: Finds a video of certain length.
     1) Input the time.
     2) Choose a filter if you want to.
     3) Click Search
 
-2) `Chess Solver`: finds the solution to the puzzle.
+`Chess Solver`: Finds the solution to the Chess problem.
     1) Right click the image of the chess problem
     2) Expand the div that came up
     3) You should see a `<img>` element
@@ -18,7 +18,7 @@ This doesn't read ANY data from the site.
     5) Input the number between `puzzle` and `.svg` into the solver
     6) You should get a solution, just press `Copy` then paste it into the password.
 
-3) `Input Validator`
+`Input Validator`: Checks if any rules are broken.
     1) Currently only rules: 5, 9 and 18 are supported
     2) Copy and Paste the password into the text area
     3) You should get a result of all the rules that you passed and failed.
