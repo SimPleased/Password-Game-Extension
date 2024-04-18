@@ -1,0 +1,19 @@
+{
+  "name": "Password Game Solver",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "A extension to help solve password game on neal.fun.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open Solver"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
