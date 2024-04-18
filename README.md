@@ -4,12 +4,12 @@ A tool to help complete password game.
 This doesn't read ANY data from the site.
 
 Current tools are:
-`Video Search`: finds a video of certain length.
+1) `Video Search`: finds a video of certain length.
     -Input the time.
     -Choose a filter if you want to.
     -Click Search
 
-`Chess Solver`: finds the solution to the puzzle.
+2) `Chess Solver`: finds the solution to the puzzle.
     -Right click the image of the chess problem
     -Expand the div that came up
     -You should see a `<img>` element
@@ -17,7 +17,7 @@ Current tools are:
     -Input the number between `puzzle` and `.svg` into the solver
     -You should get a solution, just press `Copy` then paste it into the password.
 
-`Input Validator`
+3) `Input Validator`
     -Currently only rules: 5, 9 and 18 are supported
     -Copy and Paste the password into the text area
     -You should get a result of all the rules that you passed and failed.
