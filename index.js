@@ -314,51 +314,50 @@ const createInputValidator = async () => {
         let atomicTotal = 0;
         let romanNumeralValues = [];
         let lastRoman = false;
-        let nextChar = null;
         let total = 0;
   
         for (let i = 0; i < input.length; i++) {
-          const c = input[i];
-          const romanValue = romanNumerals.get(c);
+          const romanValue = romanNumerals.get(input[i]);
   
           if (romanValue !== undefined) {
             if (lastRoman) {
               const lastRomanChar = romanNumeralValues[romanNumeralValues.length - 1][0].charAt(romanNumeralValues[romanNumeralValues.length - 1][0].length - 1);
               const lastRomanValue = romanNumerals.get(lastRomanChar);
               if (lastRomanValue < romanValue) {
-                romanNumeralValues.push([c, romanValue]);
+                romanNumeralValues.push([input[i], romanValue]);
               } else {
-                romanNumeralValues[romanNumeralValues.length - 1][0] += c;
+                romanNumeralValues[romanNumeralValues.length - 1][0] += input[i];
                 romanNumeralValues[romanNumeralValues.length - 1][1] += romanValue;
               }
             } else {
-              romanNumeralValues.push([c, romanValue]);
+              romanNumeralValues.push([input[i], romanValue]);
             }
             lastRoman = true;
           } else {
             lastRoman = false;
           }
   
-          const digit = parseInt(c, 10);
+          const digit = parseInt(input[i], 10);
           if (!isNaN(digit)) {
             total += digit;
           }
+
+          let element = input[i];
+          let atomicNumber = undefined;
   
-          nextChar = i < input.length - 1 ? input[i + 1] : null;
-          let element = c;
-  
-          if (nextChar !== null) {
-            element += nextChar;
-            const atomicNumber = periodicElements.get(element);
-            if (atomicNumber !== undefined) {
+          if (i < input.length - 1) {
+            element += input[i+1];
+            atomicNumber = periodicElements.get(element);
+            if (atomicNumber) {
               atomicTotal += atomicNumber;
-              element = '';
-            }
+            } else element = element[0];
           }
-  
-          const atomicNumber = periodicElements.get(element);
-          if (atomicNumber !== undefined) {
-            atomicTotal += atomicNumber;
+          
+          if (!atomicNumber) {
+            atomicNumber = periodicElements.get(element);
+            if (atomicNumber) {
+                atomicTotal += atomicNumber;
+            }
           }
         }
   
@@ -371,7 +370,7 @@ const createInputValidator = async () => {
         }
 
         return [total == 25, total, romanNumeralsTotal == 35, romanNumeralsTotal, atomicTotal == 200, atomicTotal];
-    }  
+    }
 }
 
 createVideoSearch();
