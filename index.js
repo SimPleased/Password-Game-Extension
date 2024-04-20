@@ -175,9 +175,9 @@ const createVideoSearch = async () => {
         });
 
         if (videoList.children.length > 0) {
-        outputLabel.textContent = 'Video data found!';
+        outputLabel.textContent = 'Video found!';
         } else {
-        outputLabel.textContent = 'No video data found for the provided time.';
+        outputLabel.textContent = 'No videos found for the provided time.';
         }
         outputLabel.style.display = 'block';
     };
