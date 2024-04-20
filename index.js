@@ -174,7 +174,7 @@ const createVideoSearch = async () => {
             li.appendChild(copyButton);
         });
 
-        if (dataArray.length > 0) {
+        if (videoList.children.length > 0) {
         outputLabel.textContent = 'Video data found!';
         } else {
         outputLabel.textContent = 'No video data found for the provided time.';
