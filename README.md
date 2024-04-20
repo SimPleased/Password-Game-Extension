@@ -15,13 +15,7 @@ This extension isn't on `Chrome Web Store` because you need to pay a $5 "verific
     3) Click Search
 
 2) `Chess Solver`: Finds the solution to the Chess problem.
-    1) Right click the image of the chess problem
-    2) Click `Inspect` in the menu
-    3) Expand the div that came up
-    4) You should see a `<img>` element
-    5) Inside that element you should see something like: `src="/password-game/chess/puzzle134.svg"`
-    6) Input the number between `puzzle` and `.svg` into the solver
-    7) You should get a solution, just press `Copy` then paste it into the password.
+   1) Change the Puzzle ID until the image looks the same as your Chess Problem
 
 3) `Input Validator`: Checks if any rules are broken.
     1) Currently only rules: 5, 9 and 18 are supported
