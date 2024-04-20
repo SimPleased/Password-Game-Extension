@@ -1,6 +1,6 @@
 {
   "name": "Password Game Solver",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
   "description": "A extension to help solve password game on neal.fun.",
   "action": {
