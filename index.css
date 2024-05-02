@@ -130,3 +130,20 @@ body > div {
     content: '✔ ';
     color: limegreen;
 }
+
+.geoguessr-embed-wrapper {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-top: 12px;
+    isolation: isolate;
+}
+
+.geoguessr-embed {
+    width: 100%;
+    height: calc(100% + 85px);
+    border: none;
+    margin-top: -70px;
+}
