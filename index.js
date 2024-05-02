@@ -869,7 +869,7 @@ const createGeoguessr = async () => {
     }
 
     document.getElementById('next-country').onclick = async () => {
-        if (currentCountryIndex !== countries.length) {
+        if (currentCountryIndex !== countries.length - 1) {
             currentCountryIndex++;
             updateCountry();
         }
