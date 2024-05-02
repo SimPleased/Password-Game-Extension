@@ -87,20 +87,20 @@ body > div {
 .rules-list > li {
     margin-top: 10px;
     width: 100%;
-    font-size: 20px;
     border-radius: 15px;
+    font-size: 18px;
     color: black;
+    overflow: hidden;
+}
+
+.rules-list > li > label {
+    width: 100%;
+    display: block;
+    padding: 8px;
 }
 
 .rules-list > li > span {
-    width: 100%;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
     display: block;
-    text-align: center;
-}
-
-.rules-list > li > div {
     padding: 5px;
 }
 
@@ -109,8 +109,12 @@ body > div {
     background-color: #ffecec;
 }
 
-.failed-rule > span {
+.failed-rule > label {
     background-color: #ffc7c7;
+}
+
+.failed-rule > label::before {
+    content: '❌ ';
 }
 
 .passed-rule {
@@ -118,6 +122,11 @@ body > div {
     background-color: #e3ffe3;
 }
 
-.passed-rule > span {
+.passed-rule > label {
     background-color: #aef3ae;
+}
+
+.passed-rule > label::before {
+    content: '✔ ';
+    color: limegreen;
 }

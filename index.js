@@ -285,7 +285,7 @@ const createInputValidator = async () => {
             return data.answer ? data.answer.toLowerCase() : '';
         })
         .catch(error => {
-            return 'No Internet Connection';
+            return null;
         });
     }
 
@@ -297,38 +297,53 @@ const createInputValidator = async () => {
         const julianDate = getJulianDate(year, month, day) + (date.getHours() - 12) / 24;
 
         return 0.5 * (1 - Math.cos(2 * Math.PI * getMoonAge(julianDate) / 29.53059));
-      }
-      
-      const getJulianDate = (year, month, day) => {
+    }
+    
+    const getJulianDate = (year, month, day) => {
         if (month <= 2) {
-          year--;
-          month += 12;
+            year--;
+            month += 12;
         }
+
         const a = Math.floor(year / 100);
         const b = 2 - a + Math.floor(a / 4);
+
         return (
-          Math.floor(365.25 * (year + 4716)) +
-          Math.floor(30.6001 * (month + 1)) +
-          day +
-          b -
-          1524.5
+            Math.floor(365.25 * (year + 4716)) +
+            Math.floor(30.6001 * (month + 1)) +
+            day +
+            b -
+            1524.5
         );
-      }
-      
-      const getMoonAge = (julianDate) => (julianDate - Math.floor(julianDate) + 0.5) * 29.53059;
-      
-      const moonPhase = () => {
+    }
+    
+    const getMoonAge = (julianDate) => (julianDate - Math.floor(julianDate) + 0.5) * 29.53059;
+    
+    const moonPhase = () => {
         const todaysMoonPhase = getMoonPhase();
         const tomorrowsMoonPhase = getMoonPhase(new Date(new Date().getTime() + 24 * 60 * 60 * 1000));
-        return (tomorrowsMoonPhase <= .25 ? ["🌓", "🌗", "🌛", "🌜"] :
-          tomorrowsMoonPhase <= .5 ? ["🌕", "🌝"] :
-          tomorrowsMoonPhase <= .75 ? ["🌓", "🌗", "🌛", "🌜"] :
-          tomorrowsMoonPhase <= 1 ? ["🌑", "🌚"] :
-          todaysMoonPhase <= .25 ? ["🌒", "🌘"] :
-          todaysMoonPhase <= .5 || todaysMoonPhase <= .75 ? ["🌔", "🌖"] :
-          ["🌒", "🌘"]);
-      };
+
+        return (
+            tomorrowsMoonPhase <= .25 ? ["🌓", "🌗", "🌛", "🌜"] :
+            tomorrowsMoonPhase <= .5 ? ["🌕", "🌝"] :
+            tomorrowsMoonPhase <= .75 ? ["🌓", "🌗", "🌛", "🌜"] :
+            tomorrowsMoonPhase <= 1 ? ["🌑", "🌚"] :
+            todaysMoonPhase <= .25 ? ["🌒", "🌘"] :
+            todaysMoonPhase <= .5 || todaysMoonPhase <= .75 ? ["🌔", "🌖"] :
+            ["🌒", "🌘"]
+        );
+    };
     
+    const isPrime = (number) => {
+    if (number <= 1) return false;
+
+    for (let i = 2; i <= Math.sqrt(number); i++) {
+        if (number % i === 0) return false;
+    }
+
+    return true;
+    }
+
     const wordleAnswer = await getWordleAnswer();
 
     document.getElementById('validate').onclick = async () => {
@@ -336,90 +351,166 @@ const createInputValidator = async () => {
 
         const rules = await [
             {
-                description: `Your password must be at least 5 characters. (${inputText.textContent.length})`,
+                desc: `Your password must be at least 5 characters.\nCurrently ${inputText.textContent.length} long.`,
                 passed: inputText.textContent.length >= 5
             }, {
-                description: 'Your password must include a number.',
+                desc: 'Your password must include a number.',
                 passed: /\d/.test(inputText.textContent)
             }, {
-                description: 'Your password must include an uppercase letter.',
+                desc: 'Your password must include an uppercase letter.',
                 passed: /[A-Z]/.test(inputText.textContent)
             }, {
-                description: 'Your password must include a special character.',
+                desc: 'Your password must include a special character.',
                 passed: /[^a-zA-Z0-9]/.test(inputText.textContent)
             }, {
-                description: `The digits in your password must add up to 25. (${total})`,
+                desc: `The digits in your password must add up to 25.\nTotal number is ${total}`,
                 passed: passedRule5
             }, {
-                description: 'Your password must include a month of the year.',
+                desc: 'Your password must include a month of the year.',
                 passed: new RegExp(months.join('|'), 'i').test(inputText.textContent)
             }, {
-                description: 'Your password must include a roman numeral.',
+                desc: 'Your password must include a roman numeral.',
                 passed: roman_numerals !== 0
             }, {
-                description: `Your password must include one of our sponsors. (pepsi, starbucks, shell)`,
+                desc: `Your password must include one of our sponsors.\nThe sponsors are: pepsi, starbucks and shell.`,
                 passed: /pepsi|starbucks|shell/i.test(inputText.textContent)
             }, {
-                description: `The Roman numerals in your password should multiply to 35. (${roman_numerals})`,
+                desc: `The Roman numerals in your password should multiply to 35.\nCurrently the total is ${roman_numerals}.`,
                 passed: passedRule9
             }, {
-                description: 'Your password must include a CAPTCHA',
+                desc: 'Your password must include a CAPTCHA',
                 passed: new RegExp(captchas.join('|'), 'i').test(inputText.textContent)
             }, {
-                description: `Your password must include today's wordle answer. (${wordleAnswer})`,
+                desc: `Your password must include today's wordle answer.\n${wordleAnswer === null ? "Couldn't find wordle answer because there is no internet." : `The current wordle answer is: ${wordleAnswer}`}.`,
                 passed: new RegExp(wordleAnswer, 'i').test(inputText.textContent)
             }, {
-                description: 'Your password must include a two letter symbol from the periodic table.',
+                desc: 'Your password must include a two letter symbol from the periodic table.',
                 passed: twoLetterAttomic
             }, {
-                description: `Your password must include the current phase of the moon as an emoji. (${moonPhase().join(', ')})`,
+                desc: `Your password must include the current phase of the moon as an emoji.\nThe current moon phase is ${moonPhase().join(', ')}.`,
                 passed: new RegExp(moonPhase().join('|')).test(inputText.textContent)
             }, {
-                description: 'Your password must include a name of a country.',
+                desc: 'Your password must include a name of a country.',
                 passed: new RegExp(countries.join('|'), 'i').test(inputText.textContent)
             }, {
-                description: 'Your password must include a leap year.',
+                desc: 'Your password must include a leap year.',
                 passed: inputText.textContent.match(/\d+/g)?.some(number => 
                     number % 4 === 0
                     && number % 100 !== 0
                     || number % 400 === 0
                 ) ?? false
             }, {
-                description: 'Your password must include a best move in algeraic chess notation',
+                desc: 'Your password must include a best move in algeraic chess notation',
                 passed: new RegExp(solutions.join('|')).test(inputText.textContent)
             }, {
-                description: "🥚 ← This is my chicken Paul. He hasn't hatched yet, please put him in your password and keep him safe.",
+                desc: "🥚 ← This is my chicken Paul. He hasn't hatched yet, please put him in your password and keep him safe.",
                 passed: /🥚|🐔/.test(inputText.textContent)
             }, {
-                description: `The elements in your password must have atomic numbers that add up to 200. (${atomicTotal})`,
+                desc: `The elements in your password must have atomic numbers that add up to 200.\nCurrently the attomic total is ${atomicTotal}.`,
                 passed: passedRule18
             }, {
-                description: 'All vowels in your password must be bolded.',
+                desc: 'All vowels in your password must be bolded.',
                 passed: ![...inputText.childNodes].some(node => {
                     if (node.nodeType === Node.TEXT_NODE) {
                       const boldValue = window.getComputedStyle(node.parentElement)['font-weight'];
-                      const vowels = node.textContent.match(/[aeiouy]/gi);
-                      if (vowels) {
-                        return vowels.some(vowel => {
-                          const isBold = boldValue === 'bold' || boldValue === '700';
-                          return !isBold;
-                        });
+                      if (node.textContent.match(/[aeiouy]/i)) {
+                          return boldValue !== 'bold' || boldValue !== '700';
                       }
                     }
                     return false;
-                })
+                  }),
+                  hideRule: true
+            }, {
+                desc: 'Oh no! Your password is on fire. Quick, put it out!',
+                passed: !inputText.textContent.match('🔥')
+            }, {
+                desc: 'Your password is not strong enough 🏋️‍♂️',
+                passed: inputText.textContent.matchAll('🏋️‍♂️').length >= 3
+            }, {
+                desc: 'Your password must contain one of the following affirmations:\ni am loved, i am worthy, i am enough',
+                passed: inputText.textContent.match(/i am loved|i am worthy|i am enough/i)
+            }, {
+                desc: "Paul has hatched! Please don't forget to feed him, he eats three 🐛 every minute.",
+                passed: inputText.textContent.match('🐔')
+            }, {
+                desc: 'Your password must include the URL of a youtube video.',
+                passed: inputText.textContent.match(/(youtube\.com\/watch\?v=|youtu\.be\/)[0-9A-Za-z_-]{11}/)
+            }, {
+                desc: `Your password must have 2 letters missing.\nCurrently missing characters: ${[...'abcdefghijklmnopqrstuvwxyz'].filter(letter => !inputText.textContent.includes(letter)).join(', ')}`,
+                passed: [...'abcdefghijklmnopqrstuvwxyz'].filter(letter => !inputText.textContent.includes(letter)).length >= 2
+            }, {
+                desc: 'Your password must contain twice as many italic characters as bold.',
+                passed: (inputText.textContent.match(/<b>[^<>]*?<\/b>/g) || []).length * 2 <= (inputText.textContent.match(/<i>[^<>]*?<\/i>/g) || []).length,
+                hideRule: true
+            }, {
+                desc: 'At least 30% of your password must be in the Wingdings font.',
+                passed: ([...inputText.childNodes].map(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                      const fontFamilyValue = window.getComputedStyle(node.parentElement)['font-family'];
+                      if (fontFamilyValue.match(/wingdings/i)) {
+                        return node.textContent;
+                      }
+                    }
+                  }) ?? '').length / inputText.textContent.length >= 0.3,
+                  hideRule: true
+            }, {
+                desc: 'Your password must include a color in hex.',
+                passed: inputText.textContent.match(/#[0-9a-f]{6}/i)
+            }, {
+                desc: 'All roman numerals must be in Times New Roman.',
+                passed: ![...inputText.childNodes].some(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const fontFamilyValue = window.getComputedStyle(node.parentElement)['font-family'];
+                        if (node.textContent.match(/M|D|C|L|X|V|I/)) {
+                            return fontFamilyValue.match(/New Times Roman/i);
+                        }
+                    }
+                    return false;
+                  }),
+                  hideRule: true
+            }, {
+                desc: 'The font size of every digit must be equal to its square.',
+                passed: false,
+                hideRule: true
+            }, {
+                desc: 'Every instance of the same letter must have a different font size.',
+                passed: false,
+                hideRule: true
+            }, {
+                desc: 'Your password must include the length of your password.',
+                passed: inputText.textContent.includes(inputText.textContent.length.toString())
+            }, {
+                desc: 'The length of your password must be a prime number',
+                passed: isPrime(inputText.textContent.length)
+            }, {
+                desc: "Uhhh let's skip this one.",
+                passed: true
+            }, {
+                desc: 'Your password must include the current time.',
+                passed: input.textContent.includes(new Date().toLocaleString(
+                    "en-US",
+                    {
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true
+                    }
+                ).split(" ")[0])
             }
-        ]
+        ];
 
         passedResultList.innerHTML = "";
         failedResultList.innerHTML = "";
         
-        rules.forEach((rule, i) => createRuleItem(
-                i + 1,
-                rule.description,
-                rule.passed
-            )       
-        );
+        rules.forEach((rule, i) => {
+            // All rules with "hideRule" aren't supported/broken
+            if (!rule.hideRule) {
+                createRuleItem(
+                    i + 1,
+                    rule.desc,
+                    rule.passed
+                )
+            }
+        });
     }
 
     const createRuleItem = async (ruleNumber, ruleDescription, passed) => {
@@ -427,13 +518,13 @@ const createInputValidator = async () => {
         li.className = passed ? 'passed-rule' : 'failed-rule';
         (passed ? passedResultList : failedResultList).appendChild(li);
 
-        const ruleTitleSpan = document.createElement('span'); 
-        ruleTitleSpan.textContent = "Rule " + ruleNumber;
-        li.appendChild(ruleTitleSpan);
+        const ruleTitleLabel = document.createElement('label'); 
+        ruleTitleLabel.textContent = "Rule " + ruleNumber;
+        li.appendChild(ruleTitleLabel);
 
-        const ruleDescriptionDiv = document.createElement('div');
-        ruleDescriptionDiv.textContent = ruleDescription;
-        li.appendChild(ruleDescriptionDiv);
+        const ruleDescriptionSpan = document.createElement('span');
+        ruleDescriptionSpan.innerHTML = ruleDescription.replace('\n', '<br>');
+        li.appendChild(ruleDescriptionSpan);
     }
 
     const validateInput = async (input) => {
