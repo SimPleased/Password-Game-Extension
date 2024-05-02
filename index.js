@@ -254,36 +254,178 @@ const createInputValidator = async () => {
         <h1>
             Input Validator
         </h1>
-
         <label>
             Enter your input:
         </label>
 
-        <textarea id="input" class="input"></textarea>
+        <div id="input" class="input" contenteditable="true" translate="no" spellcheck="false"></div>
 
-        <button id="validate">Validate</button>
+        <button id="validate" class="validate">Validate</button>
 
-        <ul id="result" class="rules-list"></ul>
+        <ul id="failed-result" class="rules-list"></ul>
+        <ul id="passed-result" class="rules-list"></ul>
     `;
 
     document.body.appendChild(inputSolverDiv);
 
-    const inputTextArea = document.getElementById('input');
-    const resultList = document.getElementById('result');
+    const inputText = document.getElementById('input');
+    const failedResultList = document.getElementById('failed-result');
+    const passedResultList = document.getElementById('passed-result');
+    const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    const captchas = ["2b827", "2cg58", "2g783", "2x7bm", "2ycn8", "3bd8f", "3bfnd", "3den6", "3ebnn", "3nw7w", "3ny45", "3p4nn", "3pe4g", "3w2bw", "4cn7b", "4dgf7", "5n245", "5ng6e", "6dd2y", "6e6pn", "6gnm3", "6p7gx", "6xxdx", "7gmf3", "7wnpm", "7wyp4", "7xd5m", "7y2x4", "8c23f", "8gecm", "8n5pn", "8pfxx", "8w754", "8y63f", "25egp", "28x47", "33p4e", "34pcn", "44xe8", "47e4p", "53wb8", "58b5m", "64m82", "66wp5", "73mnx", "74eyg", "75pfw", "77n6g", "88y52", "264m5", "387g2", "573d8", "52447", "b5nmm", "b6f2p", "b28g8", "b84xc", "bbymy", "bdg84", "be3bp", "bgd4m", "bnc2f", "bny4w", "bw6n6", "bw44w", "c2fb7", "c2pg6", "c86md", "cdcb3", "cen55", "cfc56", "cffp4", "cgcgb", "cnwyc", "cpc8c", "d6fcn", "d22bd", "d378n", "dbex3", "dbfen", "dd5w5", "de45x", "dn5df", "dn26n", "dpbyd", "e7x45", "ebcbx", "ec6pm", "ecd4w", "en4n4", "f6ne5", "f75cx", "fc6xb", "g78gn", "gc277", "gfp54", "ggd7m", "gnc3n", "gny6b", "gw53m", "m67b3", "m3588", "mgw3n", "mm3nn", "mp7wp", "myc3c", "n2by7", "n3ffn", "n373n", "nbcgb", "nbf8m", "nbfx5", "nbp3e", "nc4yg", "ndyfe", "nf8b8", "ng2gw", "nnfx3", "nnn5p", "nnn57", "ny8np", "p2m6n", "p4pde", "pcede", "pdyc8", "pf5ng", "pm363", "pmf5w", "w8f36", "w52fn", "wc2bd", "wce5n", "wg625", "x3fwf", "x4f7g", "x4gg5", "x6b5m", "x38fn", "xbcbx", "xe8xm", "xgcxy", "xngxc", "y4n6m", "y5dpp", "y5w28", "y7mnm", "y7x8p", "yd755", "yf424"];
+    const countries = ["Australia", "Belarus", "Belgium", "Bulgaria", "Cambodia", "Canada", "Chile", "Canada", "Chile", "Colombia", "Croatia", "Denmark", "Finland", "Georgia", "Germany", "Hungary", "Indonesia", "Israel", "Kenya", "Liberia", "Madagascar", "New Zealand", "Norway", "Philippines", "Portugal", "Romania", "Russia", "Slovenia", "Venezuela", "Albania", "Belgium", "Colombia", "Croatia", "Germany", "Ghana", "India", "Indonesia", "Iran", "Italy", "Japan", "Jordan", "Kenya", "Latvia", "Lithuania", "Malaysia", "Netherlands", "New Zealand", "Nigeria", "Poland", "Singapore", "Spain", "Sweden"];
+    const solutions = ['Nf6+', 'Qd5+', 'Qb8+', 'Qd8+', 'Qxg6+', 'Qxd7+', 'Qxf8+', 'Qd7+', 'Qg6+', 'Qxh6+', 'Qg4+', 'Qxh6+', 'Qg6+', 'Rg1+', 'Qxh5+', 'Ne7', 'Qc3+', 'Qf5+', 'Bf6+', 'Qc8+', 'Re8+', 'Rc1+', 'Bf4+', 'Ne6+', 'Qf8+', 'Bf5+', 'Qxc6+', 'Qxb8+', 'Qxd6+', 'Rd8+', 'Nd3+', 'Rxb6+', 'Qxf7+', 'Nf6+', 'Qe7+', 'Rg8+', 'Qxf7+', 'Be3+', 'Nh4+', 'Qxe6+', 'Qf8+', 'Qf6+', 'Nb5+', 'Qxh7+', 'Qxb7+', 'Qg1+', 'Bh6+', 'Rxf6+', 'Qxh6+', 'Bh5+', 'Nxd7+', 'Rxh2+', 'Bb5+', 'Rg8+', 'Qh8+', 'Bh5+', 'Qh7+', 'Qxh7+', 'Ne5+', 'Qxg7+', 'Rh8+', 'Rxh6+', 'Qxe8+', 'Rxe8+', 'Qxh6+', 'Qxh7+', 'Kh6', 'Be1+', 'Rxg7+', 'Qxg7+', 'Rg7', 'Bd6+', 'Ng6+', 'Qh3+', 'Rg1+', 'Qg1+', 'Rh8+', 'Rf6', 'Re7+', 'Qh6+', 'Qxh7+', 'Rf6+', 'Qf7+', 'Bb6+', 'Rxg6+', 'Qh8+', 'Rxh3+', 'Rxh7+', 'Nf5+', 'Rxf7+', 'Rf7+', 'f5+', 'Rh8+', 'Qxf2+', 'Qxf8+', 'Re8+', 'Rxf6+', 'Qh3+', 'Nf3', 'Qxe6+', 'Rg8+', 'Qe8+', 'Rxf5+', 'Qxh2+', 'Rxf8+', 'Rxg6+', 'Bf2+', 'Qxc3+', 'Nd4+', 'Qxh3+', 'Nf4+', 'Qg2+', 'Qxh7+', 'Qh2+', 'Qh1+', 'Qxh3+', 'Rxg7+', 'Qd8+', 'Rd8+', 'Rd8+', 'Nd5+', 'Rc8+', 'g5+', 'Rh4+', 'Ng6+', 'Qxe6+', 'Bf7+', 'Ne7+', 'Nh8+', 'Rxf1+', 'Bxg6+', 'Nxf7+', 'Re5+', 'Rf8+', 'Rxe6+', 'Rxh7+', 'Nxb7+', 'Qg8+', 'Qxh6+', 'Ra1+', 'Rh8+', 'Bg6+', 'Qd8+', 'Qh5+', 'Qxg6+', 'Qxa3+', 'Bg6+', 'Nf4+', 'Qxc3+', 'Ne6+', 'Nxf7+', 'Rxd8+', 'Ng3+', 'Re8+', 'Bxf3+', 'Rh2+', 'Re8+', 'Bh6', 'Qb5+', 'Qh6+', 'Rxh7+', 'Rxf7+', 'Rxf8+', 'Rh6', 'Bf5+', 'Rxh6+', 'Qe6+', 'Rxa7+', 'Rg2+', 'Qg4+', 'Qh1+', 'g4+', 'Qc6+', 'Rg8+', 'Bf6+', 'Qc6', 'Qf2+', 'Ne2+', 'Rh6+', 'Rc1+', 'Ne4+', 'Ng4', 'Rf7+', 'Qd8+', 'Rxh6+', 'Qg7+', 'Be5+', 'Rxh6+', 'Re4+', 'Nf7+', 'Rxh6+', 'Rf1+', 'Rg8+']
+    
+    const getWordleAnswer = async () => {
+        const date = new Date();
+        const dateText = [date.getFullYear().toString().padStart(2, '0'), (date.getMonth() + 1).toString().padStart(2, '0'), date.getDate().toString().padStart(2, '0')].join('-');
+        return await fetch(`https://neal.fun/api/password-game/wordle?date=${dateText}`)
+        .then(async response => {
+            const data = await response.json();
+            return data.answer ? data.answer.toLowerCase() : '';
+        })
+        .catch(error => {
+            return 'No Internet Connection';
+        });
+    }
+
+    const getMoonPhase = (date = new Date()) => {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        const julianDate = getJulianDate(year, month, day) + (date.getHours() - 12) / 24;
+
+        return 0.5 * (1 - Math.cos(2 * Math.PI * getMoonAge(julianDate) / 29.53059));
+      }
+      
+      const getJulianDate = (year, month, day) => {
+        if (month <= 2) {
+          year--;
+          month += 12;
+        }
+        const a = Math.floor(year / 100);
+        const b = 2 - a + Math.floor(a / 4);
+        return (
+          Math.floor(365.25 * (year + 4716)) +
+          Math.floor(30.6001 * (month + 1)) +
+          day +
+          b -
+          1524.5
+        );
+      }
+      
+      const getMoonAge = (julianDate) => (julianDate - Math.floor(julianDate) + 0.5) * 29.53059;
+      
+      const moonPhase = () => {
+        const todaysMoonPhase = getMoonPhase();
+        const tomorrowsMoonPhase = getMoonPhase(new Date(new Date().getTime() + 24 * 60 * 60 * 1000));
+        return (tomorrowsMoonPhase <= .25 ? ["🌓", "🌗", "🌛", "🌜"] :
+          tomorrowsMoonPhase <= .5 ? ["🌕", "🌝"] :
+          tomorrowsMoonPhase <= .75 ? ["🌓", "🌗", "🌛", "🌜"] :
+          tomorrowsMoonPhase <= 1 ? ["🌑", "🌚"] :
+          todaysMoonPhase <= .25 ? ["🌒", "🌘"] :
+          todaysMoonPhase <= .5 || todaysMoonPhase <= .75 ? ["🌔", "🌖"] :
+          ["🌒", "🌘"]);
+      };
+    
+    const wordleAnswer = await getWordleAnswer();
 
     document.getElementById('validate').onclick = async () => {
-        const [passedRule5, total, passedRule9, roman_numerals, passedRule18, atomicTotal] = await validateInput(inputTextArea.value);
-        resultList.innerHTML = "";
+        const [passedRule5, total, passedRule9, roman_numerals, passedRule18, atomicTotal, twoLetterAttomic] = await validateInput(inputText.textContent);
+
+        const rules = await [
+            {
+                description: `Your password must be at least 5 characters. (${inputText.textContent.length})`,
+                passed: inputText.textContent.length >= 5
+            }, {
+                description: 'Your password must include a number.',
+                passed: /\d/.test(inputText.textContent)
+            }, {
+                description: 'Your password must include an uppercase letter.',
+                passed: /[A-Z]/.test(inputText.textContent)
+            }, {
+                description: 'Your password must include a special character.',
+                passed: /[^a-zA-Z0-9]/.test(inputText.textContent)
+            }, {
+                description: `The digits in your password must add up to 25. (${total})`,
+                passed: passedRule5
+            }, {
+                description: 'Your password must include a month of the year.',
+                passed: new RegExp(months.join('|'), 'i').test(inputText.textContent)
+            }, {
+                description: 'Your password must include a roman numeral.',
+                passed: roman_numerals !== 0
+            }, {
+                description: `Your password must include one of our sponsors. (pepsi, starbucks, shell)`,
+                passed: /pepsi|starbucks|shell/i.test(inputText.textContent)
+            }, {
+                description: `The Roman numerals in your password should multiply to 35. (${roman_numerals})`,
+                passed: passedRule9
+            }, {
+                description: 'Your password must include a CAPTCHA',
+                passed: new RegExp(captchas.join('|'), 'i').test(inputText.textContent)
+            }, {
+                description: `Your password must include today's wordle answer. (${wordleAnswer})`,
+                passed: new RegExp(wordleAnswer, 'i').test(inputText.textContent)
+            }, {
+                description: 'Your password must include a two letter symbol from the periodic table.',
+                passed: twoLetterAttomic
+            }, {
+                description: `Your password must include the current phase of the moon as an emoji. (${moonPhase().join(', ')})`,
+                passed: new RegExp(moonPhase().join('|')).test(inputText.textContent)
+            }, {
+                description: 'Your password must include a name of a country.',
+                passed: new RegExp(countries.join('|'), 'i').test(inputText.textContent)
+            }, {
+                description: 'Your password must include a leap year.',
+                passed: inputText.textContent.match(/\d+/g)?.some(number => 
+                    number % 4 === 0
+                    && number % 100 !== 0
+                    || number % 400 === 0
+                ) ?? false
+            }, {
+                description: 'Your password must include a best move in algeraic chess notation',
+                passed: new RegExp(solutions.join('|')).test(inputText.textContent)
+            }, {
+                description: "🥚 ← This is my chicken Paul. He hasn't hatched yet, please put him in your password and keep him safe.",
+                passed: /🥚|🐔/.test(inputText.textContent)
+            }, {
+                description: `The elements in your password must have atomic numbers that add up to 200. (${atomicTotal})`,
+                passed: passedRule18
+            }, {
+                description: 'All vowels in your password must be bolded.',
+                passed: ![...inputText.childNodes].some(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                      const boldValue = window.getComputedStyle(node.parentElement)['font-weight'];
+                      const vowels = node.textContent.match(/[aeiouy]/gi);
+                      if (vowels) {
+                        return vowels.some(vowel => {
+                          const isBold = boldValue === 'bold' || boldValue === '700';
+                          return !isBold;
+                        });
+                      }
+                    }
+                    return false;
+                })
+            }
+        ]
+
+        passedResultList.innerHTML = "";
+        failedResultList.innerHTML = "";
         
-        createRuleItem(5, `The digits in your password must add up to 25. (${total})`, passedRule5);
-        createRuleItem(9, `The Roman numerals in your password should multiply to 35. (${roman_numerals})`, passedRule9);
-        createRuleItem(18, `The elements in your password must have atomic numbers that add up to 200. (${atomicTotal})`, passedRule18);
+        rules.forEach((rule, i) => createRuleItem(
+                i + 1,
+                rule.description,
+                rule.passed
+            )       
+        );
     }
 
     const createRuleItem = async (ruleNumber, ruleDescription, passed) => {
         const li = document.createElement('li');
         li.className = passed ? 'passed-rule' : 'failed-rule';
-        resultList.appendChild(li);
+        (passed ? passedResultList : failedResultList).appendChild(li);
 
         const ruleTitleSpan = document.createElement('span'); 
         ruleTitleSpan.textContent = "Rule " + ruleNumber;
@@ -315,6 +457,7 @@ const createInputValidator = async () => {
   
         const romanNumerals = new Map([['I', 1], ['V', 5], ['X', 10], ['L', 50], ['C', 100], ['D', 500], ['M', 1000]]);
   
+        let twoLetterAttomic = false;
         let atomicTotal = 0;
         let romanNumeralValues = [];
         let lastRoman = false;
@@ -354,6 +497,7 @@ const createInputValidator = async () => {
             atomicNumber = periodicElements.get(element);
             if (atomicNumber) {
               atomicTotal += atomicNumber;
+              twoLetterAttomic = true;
             } else element = element[0];
           }
           
@@ -373,12 +517,11 @@ const createInputValidator = async () => {
             }
         }
 
-        return [total == 25, total, romanNumeralsTotal == 35, romanNumeralsTotal, atomicTotal == 200, atomicTotal];
+        return [total == 25, total, romanNumeralsTotal == 35, romanNumeralsTotal, atomicTotal == 200, atomicTotal, twoLetterAttomic];
     }
 }
 
 createVideoSearch();
-
 
 let oldValue = 'video-search';
 document.getElementById('solver').onchange = async (e) => {
