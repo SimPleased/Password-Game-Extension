@@ -18,7 +18,7 @@ This extension isn't on `Chrome Web Store` because you need to pay a $5 "verific
    1) Change the Puzzle ID until the image looks the same as your Chess Problem
 
 3) `Input Validator`: Checks if any rules are broken.
-    1) Currently only rules 1 to 19
+    1) Currently the only rules not supported are: 26, 27, 29, 30, 31
     2) Copy and Paste the password into the text area
     3) You should get a result of all the rules that you passed and failed.
 
