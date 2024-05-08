@@ -251,6 +251,146 @@
         "xxxv": false
       }
   ],
+  "captcha": [
+    {
+      "seconds": 269,
+      "id": "dn5df-1eHP0",
+      "atomic_number": 168,
+      "xxxv": false
+    },
+    {
+      "seconds": 337,
+      "id": "geEQp6-ecd4",
+      "atomic_number": 152,
+      "xxxv": false
+    },
+    {
+      "seconds": 1962,
+      "id": "sEcG8j-dd5w",
+      "atomic_number": 152,
+      "xxxv": false
+    },
+    {
+      "seconds": 261,
+      "id": "wdd8fw-3ny4",
+      "atomic_number": 152,
+      "xxxv": false
+    },
+    {
+      "seconds": 246,
+      "id": "hb61T6-pdyc",
+      "atomic_number": 152,
+      "xxxv": false
+    },
+    {
+      "seconds": 530,
+      "id": "t6oA15-x4gg",
+      "atomic_number": 152,
+      "xxxv": false
+    },
+    {
+      "seconds": 348,
+      "id": "uVHqmn-3ny4",
+      "atomic_number": 153,
+      "xxxv": false
+    },
+    {
+      "seconds": 202,
+      "id": "HGVb2m-y7x8",
+      "atomic_number": 153,
+      "xxxv": false
+    },
+    {
+      "seconds": 379,
+      "id": "cOnvJ8-x4gg",
+      "atomic_number": 160,
+      "xxxv": false
+    },
+    {
+      "seconds": 434,
+      "id": "Fjneva-bdg8",
+      "atomic_number": 161,
+      "xxxv": false
+    },
+    {
+      "seconds": 768,
+      "id": "atAF-H-64m8",
+      "atomic_number": 162,
+      "xxxv": false
+    },
+    {
+      "seconds": 1000,
+      "id": "BvxO09-e7x4",
+      "atomic_number": 165,
+      "xxxv": false
+    },
+    {
+      "seconds": 1143,
+      "id": "zg2Pch-x4gg",
+      "atomic_number": 167,
+      "xxxv": false
+    },
+    {
+      "seconds": 197,
+      "id": "S1ayVf-6p7g",
+      "atomic_number": 168,
+      "xxxv": false
+    },
+    {
+      "seconds": 470,
+      "id": "HSvpdT-cpc8",
+      "atomic_number": 169,
+      "xxxv": false
+    },
+    {
+      "seconds": 240,
+      "id": "Aruj7g-c2pg",
+      "atomic_number": 170,
+      "xxxv": false
+    },
+    {
+      "seconds": 303,
+      "id": "uaKeos-mp7w",
+      "atomic_number": 171,
+      "xxxv": false
+    },
+    {
+      "seconds": 237,
+      "id": "iK4ZVz-33p4",
+      "atomic_number": 171,
+      "xxxv": false
+    },
+    {
+      "seconds": 1761,
+      "id": "tKoxcV-d378",
+      "atomic_number": 171,
+      "xxxv": false
+    },
+    {
+      "seconds": 240,
+      "id": "hRvTi5-c2pg",
+      "atomic_number": 174,
+      "xxxv": false
+    },
+    {
+      "seconds": 941,
+      "id": "jEqRYs-mp7w",
+      "atomic_number": 191,
+      "xxxv": false
+    },
+    {
+      "seconds": 244,
+      "id": "pBvkY1-x3fw",
+      "atomic_number": 196,
+      "xxxv": false
+    },
+    {
+      "seconds": 969,
+      "id": "houai6G-nbc",
+      "atomic_number": 152,
+      "xxxv": false
+    }
+  ],
   "countries": {
       "iran": [
           {
@@ -348,6 +488,44 @@
             "xxxv": true
           }
       ]
+  },
+  "chess": [
+    {
+      "seconds": 220,
+      "id": "Kh6-qgE8x9s",
+      "atomic_number": 171,
+      "xxxv": false
+    },
+    {
+      "seconds": 569,
+      "id": "Nf3-mzNQ6yQ",
+      "atomic_number": 166,
+      "xxxv": false
+    }
+  ],
+  "affirmations": {
+    "worthy": [
+      {
+        "seconds": 1364,
+        "id": "Ih1SFP-Iamw",
+        "atomic_number": 169,
+        "xxxv": true
+      },
+      {
+        "seconds": 446,
+        "id": "Qf29Iu-iamw",
+        "atomic_number": 76,
+        "xxxv": true
+      }
+    ],
+    "enough": [
+      {
+        "seconds": 179,
+        "id": "f_t-4U-IamE",
+        "atomic_number": 168,
+        "xxxv": true
+      }
+    ]
   },
   "random": [
     {

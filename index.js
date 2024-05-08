@@ -29,7 +29,10 @@ const createVideoSearch = async () => {
             <option value="months">Months</option>
             <option value="sponsors">Sponsors</option>
             <option value="roman_numerals">Roman Numerals</option>
+            <option value="captcha">Captcha</option>
             <option value="countries">Countries</option>
+            <option value="chess">Chess</option>
+            <option value="affirmations">Affirmations</option>
         </select>
 
         <select id="sponsor" style="display: none;">
@@ -101,59 +104,68 @@ const createVideoSearch = async () => {
 
         let dataArray = [];
         switch (type) {
-        case "any":
-            dataArray = flattenData(jsonData);
-            break;
-        case "months":
-            dataArray = jsonData.months;
-            break;
-        case "sponsors":
-            switch (sponsor) {
             case "any":
-                dataArray = Object.values(jsonData.sponsors).flat();
+                dataArray = flattenData(jsonData);
                 break;
-            case "pepsi":
-                dataArray = jsonData.sponsors.pepsi;
+            case "months":
+                dataArray = jsonData.months;
                 break;
-            case "shell":
-                dataArray = jsonData.sponsors.shell;
+            case "sponsors":
+                switch (sponsor) {
+                case "any":
+                    dataArray = Object.values(jsonData.sponsors).flat();
+                    break;
+                case "pepsi":
+                    dataArray = jsonData.sponsors.pepsi;
+                    break;
+                case "shell":
+                    dataArray = jsonData.sponsors.shell;
+                    break;
+                case "starbucks":
+                    dataArray = jsonData.sponsors.starbucks;
+                    break;
+                }
                 break;
-            case "starbucks":
-                dataArray = jsonData.sponsors.starbucks;
+            case "roman_numerals":
+                dataArray = jsonData.roman_numerals;
                 break;
-            }
-            break;
-        case "roman_numerals":
-            dataArray = jsonData.roman_numerals;
-            break;
-        case "countries":
-            switch (countryInput.value) {
-            case "any":
-                dataArray = Object.values(jsonData.countries).flat();
+            case "captcha":
+                dataArray = jsonData.captcha;
                 break;
-            case "iran":
-                dataArray = jsonData.countries.iran;
+            case "countries":
+                switch (countryInput.value) {
+                case "any":
+                    dataArray = Object.values(jsonData.countries).flat();
+                    break;
+                case "iran":
+                    dataArray = jsonData.countries.iran;
+                    break;
+                case "japan":
+                    dataArray = jsonData.countries.japan;
+                    break;
+                case "peru":
+                    dataArray = jsonData.countries.peru;
+                    break;
+                case "kenya":
+                    dataArray = jsonData.countries.kenya;
+                    break;
+                case "spain":
+                    dataArray = jsonData.countries.spain;
+                    break;
+                case "india":
+                    dataArray = jsonData.countries.india;
+                    break;
+                }
                 break;
-            case "japan":
-                dataArray = jsonData.countries.japan;
+            case "chess":
+                dataArray = jsonData.chess;
                 break;
-            case "peru":
-                dataArray = jsonData.countries.peru;
+            case "affirmations":
+                dataArray = Object.values(jsonData.affirmations).flat();
                 break;
-            case "kenya":
-                dataArray = jsonData.countries.kenya;
-                break;
-            case "spain":
-                dataArray = jsonData.countries.spain;
-                break;
-            case "india":
-                dataArray = jsonData.countries.india;
-                break;
-            }
-            break;
         }
 
-        dataArray.filter(item => item.seconds === totalSeconds || item.seconds === totalSeconds + 1).forEach(item => {
+        dataArray.filter(item => Math.abs(item.seconds - totalSeconds) <= 1).forEach(item => {
 
             const li = document.createElement('li');
             videoList.appendChild(li);
