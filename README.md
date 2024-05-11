@@ -1,6 +1,8 @@
 # Password Game Extension
 
 A tool to help complete password game.
+If you dont want to download the extension you can just use the website version.
+- https://passwordgamesolver.netlify.app/
 
 This doesn't read ANY data from the website.
 The input for all the tools are from the user not the website.
